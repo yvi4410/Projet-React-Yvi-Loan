@@ -22,13 +22,28 @@ const routes = [
 
 // This component generates the navigation links based on the routes array.
 const NavMenu = ({ routes, children }) => (
-    <Nav className="mx-auto mb-2 mb-lg-0 mt-4 mt-lg-0">
+    <Nav className="ms-auto mb-2 mb-lg-0 mt-4 mt-lg-0">
         {children}
         {routes.map((route, i) => (
             <Nav.Item key={i}>
                 <Nav.Link href={route.href}>{route.name}</Nav.Link>
             </Nav.Item>
         ))}
+    </Nav>
+);
+
+const NavMenu2 = ({ toggleSearch }) => (
+    <Nav className="flex-row ms-auto mb-2 mb-lg-0">
+        <Nav.Item className="nav-item me-2">
+            <Button variant="light" className="px-3">
+                <FontAwesomeIcon icon={faBookOpen} />
+            </Button>
+        </Nav.Item>
+        <Nav.Item className="nav-item">
+            <Button variant="light" className="px-3" onClick={toggleSearch}>
+                <FontAwesomeIcon icon={faSearch} />
+            </Button>
+        </Nav.Item>
     </Nav>
 );
 
