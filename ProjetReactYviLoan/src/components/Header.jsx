@@ -47,6 +47,10 @@ const NavMenu2 = ({ toggleSearch }) => (
     </Nav>
 );
 
+NavMenu2.propTypes = {
+    toggleSearch: PropTypes.func.isRequired,
+};
+
 NavMenu.propTypes = {
     routes: PropTypes.array.isRequired,
     children: PropTypes.node,
