@@ -57,7 +57,7 @@ NavMenu.propTypes = {
 };
 
 // This component shows additional nav buttons (shopping cart and search).
-const NavMenu2 = ({ toggleSearch }) => (
+/* const NavMenu2 = ({ toggleSearch }) => (
     <Nav className="flex-row mb-2 mb-lg-0">
         <Nav.Item className="nav-item me-2">
             <Button variant="light" className="px-3">
@@ -70,7 +70,7 @@ const NavMenu2 = ({ toggleSearch }) => (
             </Button>
         </Nav.Item>
     </Nav>
-);
+);*/
 
 NavMenu2.propTypes = {
     toggleSearch: PropTypes.func.isRequired,
