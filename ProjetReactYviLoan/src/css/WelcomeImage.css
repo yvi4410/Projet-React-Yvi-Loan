@@ -11,7 +11,7 @@
     align-items: center;
     justify-content: center;
 
-    margin-top: -429px; /* this pushes the whole section below the fixed header */
+    margin-top: 80px; /* adjusted to remove white gap by moving section up further */
 }
 
 
