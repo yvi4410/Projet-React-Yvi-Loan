@@ -1,17 +1,23 @@
 import React from "react";
-import "../css/WelcomeImage.css";
-import logo from "../assets/logo.png"; // Adjust the path if needed
-import background from "../assets/background.jpg"; // Import the background image
+import logo from "../assets/logo.png";
+import background from "../assets/background.jpg";
 
-const WelcomeImage = () => {
-    return (
-        <div className="welcome-image" style={{ backgroundImage: `url(${background})` }}>
-            <div className="welcome-text">
-                <img src={logo} alt="Logo" className="welcome-logo"/>
-                League of Legends Wiki
-            </div>
-        </div>
-    );
-};
-
-export default WelcomeImage;
+export default function WelcomeImage() {
+  return (
+    <div
+      className="flex items-center justify-center h-48 md:h-64 w-full"
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="flex items-center gap-3 bg-black/40 px-4 py-2 rounded">
+        <img src={logo} alt="Logo" className="h-8 md:h-12 object-contain" />
+        <span className="text-xl md:text-3xl font-bold text-white">
+          League of Legends&nbsp;Wiki
+        </span>
+      </div>
+    </div>
+  );
+}

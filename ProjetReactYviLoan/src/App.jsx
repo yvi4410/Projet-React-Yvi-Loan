@@ -1,17 +1,12 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
-import WelcomeImage from "./components/WelcomeImage"; // Import the WelcomeImage component
-import DernierAjout from './components/DernierAjout';
 
-
-function App() {
-    return (
-        <div >
-            <Header />
-            <WelcomeImage />
-            {/* Add other components here */}
-        </div>
-);
+export default function App() {
+  return (
+    <>
+      <Header />
+      <Outlet />   {/* chaque page se rend ici */}
+    </>
+  );
 }
-
-export default App;
