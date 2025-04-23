@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Button,
     Collapse,
@@ -12,16 +12,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import "../css/Header.css";
-import logo from "../assets/logo@.png"; // Import your logo image
-import { Link } from "react-router-dom";
+import logo from "../assets/logo@.png";
+import { Link, useNavigate } from "react-router-dom";
 
-// Define your navigation routes – the name is the text and href is where it should link.
+// Définition des routes de navigation
 const routes = [
     { name: "Champions", href: "#" },
     { name: "Items", href: "#" },
 ];
 
-// This component generates the navigation links based on the routes array.
+// Composant pour générer les liens de navigation
 const NavMenu = ({ routes, children }) => (
     <Nav className="ms-auto mb-2 mb-lg-0 mt-4 mt-lg-0">
         {children}
@@ -32,9 +32,9 @@ const NavMenu = ({ routes, children }) => (
                 </Nav.Link>
             </Nav.Item>
         ))}
-        {/* 👉 Lien vers Nautilus */}
     </Nav>
 );
+
 const NavMenu2 = ({ toggleSearch }) => (
     <Nav className="flex-row ms-auto mb-2 mb-lg-0">
         <Nav.Item className="nav-item me-2">
@@ -59,38 +59,49 @@ NavMenu.propTypes = {
     children: PropTypes.node,
 };
 
-// This component shows additional nav buttons (shopping cart and search).
-/* const NavMenu2 = ({ toggleSearch }) => (
-    <Nav className="flex-row mb-2 mb-lg-0">
-        <Nav.Item className="nav-item me-2">
-            <Button variant="light" className="px-3">
-                <FontAwesomeIcon icon={faBookOpen} />
-            </Button>
-        </Nav.Item>
-        <Nav.Item className="nav-item">
-            <Button variant="light" className="px-3" onClick={toggleSearch}>
-                <FontAwesomeIcon icon={faSearch} />
-            </Button>
-        </Nav.Item>
-    </Nav>
-);*/
+// Composant de recherche
+const SearchForm = () => {
+    const [query, setQuery] = useState("");
+    const [champions, setChampions] = useState([]);
+    const navigate = useNavigate();
 
-NavMenu2.propTypes = {
-    toggleSearch: PropTypes.func.isRequired,
+    useEffect(() => {
+        fetch("https://ddragon.leagueoflegends.com/cdn/14.8.1/data/en_US/champion.json")
+            .then((res) => res.json())
+            .then((data) => setChampions(Object.values(data.data)))
+            .catch((err) => console.error("Erreur de chargement des champions", err));
+    }, []);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const champ = champions.find((c) =>
+            c.name.toLowerCase() === query.toLowerCase()
+        );
+        if (champ) {
+            navigate(`/champion/${champ.id}`);
+        } else {
+            alert("Champion non trouvé !");
+        }
+    };
+
+    return (
+        <Form className="mt-4" onSubmit={handleSubmit}>
+            <InputGroup>
+                <Form.Control
+                    type="search"
+                    placeholder="Tape un nom de champion..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                />
+                <Button variant="" className="ezy__nav5-btn px-3" type="submit">
+                    Search
+                </Button>
+            </InputGroup>
+        </Form>
+    );
 };
 
-// This component renders the search form.
-const SearchForm = () => (
-    <Form className="mt-4">
-        <InputGroup>
-            <Form.Control type="search" placeholder="City, Address, Zip" />
-            <Button variant="" className="ezy__nav5-btn px-3" type="submit">
-                Search
-            </Button>
-        </InputGroup>
-    </Form>
-);
-
+// Composant principal Header
 const Header = () => {
     const [isOpenSearch, setIsOpenSearch] = useState(false);
     const toggleSearch = () => setIsOpenSearch(!isOpenSearch);

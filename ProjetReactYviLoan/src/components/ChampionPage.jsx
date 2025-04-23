@@ -6,6 +6,7 @@ import ChampionAbilities from "./ChampionAbilities";
 import ChampionAbilityDetail from "./ChampionAbilityDetail";
 import ChampionFeature from "./ChampionFeature";
 import './Champion.css';
+import Footer from "./Footer.jsx";
 
 const ChampionPage = () => {
     const { name } = useParams();
@@ -64,6 +65,7 @@ const ChampionPage = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };
