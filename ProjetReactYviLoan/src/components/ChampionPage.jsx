@@ -4,6 +4,8 @@ import ChampionLore from "./ChampionLore";
 import ChampionStats from "./ChampionStats";
 import ChampionAbilities from "./ChampionAbilities";
 import ChampionAbilityDetail from "./ChampionAbilityDetail";
+import ChampionFeature from "./ChampionFeature";
+import './Champion.css';
 
 const ChampionPage = () => {
     const { name } = useParams();
@@ -38,16 +40,30 @@ const ChampionPage = () => {
     };
 
     return (
-        <div className="p-4 max-w-screen-xl mx-auto">
-            <img src={splashUrl} alt={champion.name} className="w-full rounded-2xl shadow mb-6" />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="md:col-span-2">
-                    <ChampionLore lore={champion.lore} />
+        <div className="pt-4 bg-dark text-white">
+            <ChampionFeature
+                name={champion.name}
+                lore={champion.lore}
+                splashImage={splashUrl}
+            />
+
+            <div className="container my-5">
+                <div className="row">
+                    <div className="col-md-4 mb-4">
+                        <ChampionStats stats={champion.stats} />
+                    </div>
+
+                    <div className="col-md-8 mb-4">
+                        <ChampionAbilities abilities={champion.spells} passive={passive} />
+                    </div>
                 </div>
-                <ChampionStats stats={champion.stats} />
+
+                <div className="row mt-5">
+                    <div className="col-12">
+                        <ChampionAbilityDetail ability={champion.spells[3]} />
+                    </div>
+                </div>
             </div>
-            <ChampionAbilities abilities={champion.spells} passive={passive} />
-            <ChampionAbilityDetail ability={champion.spells[3]} /> {/* ulti (R) */}
         </div>
     );
 };
