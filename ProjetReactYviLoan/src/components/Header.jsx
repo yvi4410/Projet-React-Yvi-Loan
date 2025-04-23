@@ -13,6 +13,7 @@ import { faSearch, faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import "../css/Header.css";
 import logo from "../assets/logo@.png"; // Import your logo image
+import { Link } from "react-router-dom";
 
 // Define your navigation routes – the name is the text and href is where it should link.
 const routes = [
@@ -26,12 +27,14 @@ const NavMenu = ({ routes, children }) => (
         {children}
         {routes.map((route, i) => (
             <Nav.Item key={i}>
-                <Nav.Link href={route.href}>{route.name}</Nav.Link>
+                <Nav.Link as={Link} to={route.href}>
+                    {route.name}
+                </Nav.Link>
             </Nav.Item>
         ))}
+        {/* 👉 Lien vers Nautilus */}
     </Nav>
 );
-
 const NavMenu2 = ({ toggleSearch }) => (
     <Nav className="flex-row ms-auto mb-2 mb-lg-0">
         <Nav.Item className="nav-item me-2">
