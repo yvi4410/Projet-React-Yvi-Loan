@@ -1,0 +1,110 @@
+.ezy__httpcodes12_zEX0iejo {
+    /* Bootstrap variables */
+    --bs-body-color: #262e3a;
+    --bs-body-bg: #fff;
+
+    /* easy frontend variables */
+    --ezy-theme-color: rgb(13, 110, 253);
+    --ezy-theme-color-rgb: 13, 110, 253;
+
+    background-color: var(--bs-body-bg);
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    padding: 180px 0;
+}
+
+@media (min-width: 768px) {
+    .ezy__httpcodes12_zEX0iejo {
+        padding: 300px 0;
+    }
+}
+
+/* Gray Block Style */
+.gray .ezy__httpcodes12_zEX0iejo,
+.ezy__httpcodes12_zEX0iejo.gray {
+    /* Bootstrap variables */
+    --bs-body-bg: rgb(246, 246, 246);
+}
+
+/* Dark Gray Block Style */
+.dark-gray .ezy__httpcodes12_zEX0iejo,
+.ezy__httpcodes12_zEX0iejo.dark-gray {
+    /* Bootstrap variables */
+    --bs-body-color: rgb(241, 241, 241);
+    --bs-body-bg: rgb(30, 39, 53);
+}
+
+/* Dark Block Style */
+.dark .ezy__httpcodes12_zEX0iejo,
+.ezy__httpcodes12_zEX0iejo.dark {
+    /* Bootstrap variables */
+    --bs-body-color: rgb(255, 255, 255);
+    --bs-body-bg: rgb(11, 23, 39);
+}
+
+/* heading and sub-heading */
+.ezy__httpcodes12_zEX0iejo-heading {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1;
+    color: var(--bs-body-color);
+}
+
+.ezy__httpcodes12_zEX0iejo-sub-heading {
+    color: var(--bs-body-color);
+    font-size: 18px;
+    line-height: 25px;
+    opacity: 0.8;
+}
+
+@media (min-width: 768px) {
+    .ezy__httpcodes12_zEX0iejo-heading {
+        font-size: 40px;
+    }
+}
+
+/* banner */
+.ezy__httpcodes12_zEX0iejo-banner {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 40vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    display: none;
+}
+
+@media (min-width: 576px) {
+    .ezy__httpcodes12_zEX0iejo-banner {
+        display: block;
+    }
+}
+
+/* btn */
+.ezy__httpcodes12_zEX0iejo .btn-primary {
+    background-color: var(--ezy-theme-color);
+    border-color: var(--ezy-theme-color);
+}
+
+.ezy__httpcodes12_zEX0iejo .btn-primary:hover {
+    background-color: rgba(var(--ezy-theme-color-rgb), 0.9);
+    border-color: rgba(var(--ezy-theme-color-rgb), 0.9);
+}
+
+.ezy__httpcodes12_zEX0iejo-btn {
+    padding: 10px 25px;
+    background-color: transparent;
+    color: var(--ezy-theme-color);
+    border: 1px solid var(--ezy-theme-color);
+}
+
+.ezy__httpcodes12_zEX0iejo-btn:hover {
+    color: #fff;
+    background-color: var(--ezy-theme-color);
+    border-color: var(--ezy-theme-color);
+}
