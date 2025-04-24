@@ -21,7 +21,6 @@ const routes = [
     { name: "Items", href: "#" },
 ];
 
-// Composant pour générer les liens de navigation
 const NavMenu = ({ routes, children }) => (
     <Nav className="ms-auto mb-2 mb-lg-0 mt-4 mt-lg-0">
         {children}
@@ -59,10 +58,10 @@ NavMenu.propTypes = {
     children: PropTypes.node,
 };
 
-// Composant de recherche
 const SearchForm = () => {
     const [query, setQuery] = useState("");
     const [champions, setChampions] = useState([]);
+    const [suggestions, setSuggestions] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -72,36 +71,71 @@ const SearchForm = () => {
             .catch((err) => console.error("Erreur de chargement des champions", err));
     }, []);
 
+    const handleChange = (e) => {
+        const value = e.target.value;
+        setQuery(value);
+
+        if (value.length === 0) {
+            setSuggestions([]);
+            return;
+        }
+
+        const filtered = champions.filter((c) =>
+            c.name.toLowerCase().startsWith(value.toLowerCase())
+        );
+        setSuggestions(filtered.slice(0, 5)); // Limite à 5 suggestions
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        const champ = champions.find((c) =>
-            c.name.toLowerCase() === query.toLowerCase()
+        const champ = champions.find(
+            (c) => c.name.toLowerCase() === query.toLowerCase()
         );
         if (champ) {
             navigate(`/champion/${champ.id}`);
+            setQuery("");
+            setSuggestions([]);
         } else {
             alert("Champion non trouvé !");
         }
     };
 
+    const handleSelect = (name, id) => {
+        setQuery(name);
+        setSuggestions([]);
+        navigate(`/champion/${id}`);
+    };
+
     return (
-        <Form className="mt-4" onSubmit={handleSubmit}>
+        <Form className="mt-4 position-relative" onSubmit={handleSubmit}>
             <InputGroup>
                 <Form.Control
                     type="search"
                     placeholder="Tape un nom de champion..."
                     value={query}
-                    onChange={(e) => setQuery(e.target.value)}
+                    onChange={handleChange}
+                    autoComplete="off"
                 />
                 <Button variant="" className="ezy__nav5-btn px-3" type="submit">
                     Search
                 </Button>
             </InputGroup>
+            {suggestions.length > 0 && (
+                <ul className="suggestions-list">
+                    {suggestions.map((champ) => (
+                        <li
+                            key={champ.id}
+                            onClick={() => handleSelect(champ.name, champ.id)}
+                        >
+                            {champ.name}
+                        </li>
+                    ))}
+                </ul>
+            )}
         </Form>
     );
 };
 
-// Composant principal Header
 const Header = () => {
     const [isOpenSearch, setIsOpenSearch] = useState(false);
     const toggleSearch = () => setIsOpenSearch(!isOpenSearch);
@@ -110,7 +144,8 @@ const Header = () => {
         <div className="ezy__nav5 dark-gray header-fixed">
             <Navbar expand="lg" className="flex-column py-3">
                 <Container fluid>
-                    <Navbar.Brand href="#">
+                    {/* Logo cliquable */}
+                    <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
                         <img src={logo} alt="Logo" style={{ height: "80px" }} />
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="ezy__nav5-navbar-nav">
