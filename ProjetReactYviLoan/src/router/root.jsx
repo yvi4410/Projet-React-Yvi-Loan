@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
+import Layout from "./Layout"; // nouveau layout
 import Error404 from "../pages/404";
-import Home from "../pages/home";
+import ChampionPage from "../pages/ChampionPage.jsx";
 
 const router = createBrowserRouter([
     {
@@ -11,9 +12,12 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <Home />
+                element: <Layout />
+            },
+            {
+                path: "champion/:name",
+                element: <ChampionPage />
             }
-
         ]
     }
 ]);

@@ -1,21 +1,8 @@
 import React from "react";
-import Header from "./components/Header";
-import WelcomeImage from "./components/WelcomeImage";
-import DernierAjout from "./components/DernierAjout";
-import ChampionList from "./components/ChampionList";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  return (
-    <div>
-      <Header />
-      {/* bannière d’accueil */}
-      <WelcomeImage />
-      {/* dernier champion ajouté */}
-      <DernierAjout />
-      {/* grille complète des champions */}
-      <ChampionList />
-    </div>
-  );
+    return <Outlet />; // uniquement l'affichage dynamique ici
 }
 
 export default App;
