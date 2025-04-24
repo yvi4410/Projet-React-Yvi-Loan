@@ -7,8 +7,6 @@ import ChampionFeature from "../components/ChampionFeature";
 import '../css/Champion.css';
 import Footer from "../components/Footer.jsx";
 import Header from "../components/Header.jsx";
-
-champion.passive.image.full = undefined;
 const ChampionPage = () => {
     const { name } = useParams();
     const [champion, setChampion] = useState(null);
@@ -58,7 +56,7 @@ const ChampionPage = () => {
 
                 <div className="row mb-4">
                     <div className="col-12">
-                        <ChampionAbilities abilities={champion.spells} passive={passive} />
+                        <ChampionAbilities champion={champion} />
                     </div>
                 </div>
                 <div className="row mt-5">
