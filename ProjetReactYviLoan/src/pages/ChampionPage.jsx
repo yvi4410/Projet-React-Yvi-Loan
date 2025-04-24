@@ -50,16 +50,17 @@ const ChampionPage = () => {
             />
 
             <div className="container-fluid my-5 px-5">
-                <div className="row">
-                    <div className="col-md-4 mb-4">
+                <div className="row mb-4">
+                    <div className="col-12">
                         <ChampionStats stats={champion.stats} />
-                    </div>
-
-                    <div className="col-md-8 mb-4">
-                        <ChampionAbilities abilities={champion.spells} passive={passive} />
                     </div>
                 </div>
 
+                <div className="row mb-4">
+                    <div className="col-12">
+                        <ChampionAbilities abilities={champion.spells} passive={passive} />
+                    </div>
+                </div>
                 <div className="row mt-5">
                     <div className="col-12">
                         <ChampionAbilityDetail ability={champion.spells[3]} />
