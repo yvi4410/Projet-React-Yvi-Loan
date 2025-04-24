@@ -8,6 +8,7 @@ import '../css/Champion.css';
 import Footer from "../components/Footer.jsx";
 import Header from "../components/Header.jsx";
 
+champion.passive.image.full = undefined;
 const ChampionPage = () => {
     const { name } = useParams();
     const [champion, setChampion] = useState(null);
@@ -48,7 +49,6 @@ const ChampionPage = () => {
                 lore={champion.lore}
                 splashImage={splashUrl}
             />
-
             <div className="container-fluid my-5 px-5">
                 <div className="row mb-4">
                     <div className="col-12">
