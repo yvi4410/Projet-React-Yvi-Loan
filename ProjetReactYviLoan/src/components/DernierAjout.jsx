@@ -30,7 +30,7 @@ const SpellItem = ({ spell }) => (
     </div>
   </div>
 );
-
+//tmp
 SpellItem.propTypes = {
   spell: PropTypes.object.isRequired,
 };
