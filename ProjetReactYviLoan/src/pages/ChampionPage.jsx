@@ -4,7 +4,7 @@ import ChampionStats from "../components/ChampionStats";
 import ChampionAbilities from "../components/ChampionAbilities";
 import ChampionAbilityDetail from "../components/ChampionAbilityDetail";
 import ChampionFeature from "../components/ChampionFeature";
-import '../css/Champion.css';
+//import '../css/Champion.css'
 import Footer from "../components/Footer.jsx";
 import Header from "../components/Header.jsx";
 const ChampionPage = () => {
@@ -40,33 +40,34 @@ const ChampionPage = () => {
     };
 
     return (
-        <div className="champion-page d-flex flex-column min-vh-100 w-100 m-0 p-0 bg-dark text-white">
-            <Header />
-            <ChampionFeature
-                name={champion.name}
-                lore={champion.lore}
-                splashImage={splashUrl}
-            />
-            <div className="container-fluid my-5 px-5">
-                <div className="row mb-4">
-                    <div className="col-12">
-                        <ChampionStats stats={champion.stats} />
+        <section className="ezy__portfolio5 dark-gray champion-page w-full">
+            <div className="champion-page d-flex flex-column min-vh-100 w-full m-0 p-0 text-white">
+                <Header />
+                <ChampionFeature
+                    name={champion.name}
+                    lore={champion.lore}
+                    splashImage={splashUrl}
+                />
+                <div className="container-fluid my-5 px-5 w-full">
+                    <div className="row mb-4">
+                        <div className="col-12">
+                            <ChampionAbilities champion={champion} />
+                        </div>
+                    <div className="row mb-4">
+                        <div className="col-12">
+                            <ChampionStats stats={champion.stats} />
+                        </div>
+                    </div>
+                    </div>
+                    <div className="row mt-5">
+                        <div className="col-12">
+                            <ChampionAbilityDetail ability={champion.spells[3]} />
+                        </div>
                     </div>
                 </div>
-
-                <div className="row mb-4">
-                    <div className="col-12">
-                        <ChampionAbilities champion={champion} />
-                    </div>
-                </div>
-                <div className="row mt-5">
-                    <div className="col-12">
-                        <ChampionAbilityDetail ability={champion.spells[3]} />
-                    </div>
-                </div>
+                <Footer />
             </div>
-            <Footer />
-        </div>
+        </section>
     );
 };
 
