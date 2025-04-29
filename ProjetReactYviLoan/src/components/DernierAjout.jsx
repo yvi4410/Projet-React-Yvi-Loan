@@ -1,76 +1,81 @@
 // src/components/DernierAjout.jsx
-import React, { useEffect, useState } from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import React, { useEffect, useState, useRef } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "../css/DernierAjout.css";                // paste the <style> of the template here
+import "../css/DernierAjout.css";
 
-/* ══════════ Spell sub-component (template’s FeatureItem, tweaked) ══════════ */
+/* ══════════ Réglage : cadence de rafraîchissement (ms) ══════════ */
+const POLL_INTERVAL = 60 * 60 * 1000; // 1 h
+
+/* ══════════ Item compétence ══════════ */
 const SpellItem = ({ spell }) => (
-  <div className="d-flex ezy__featured25-item position-relative p-3 p-md-4 mb-3 mb-lg-4">
-    <div className="ezy__featured25-icon mb-4 me-4">
-      <img
-        src={spell.icon}
-        alt={spell.name}
-        title=""
-        className="w-12 h-12 rounded-md"
-        style={{ width: 48, height: 48 }}
-      />
+    <div className="d-flex ezy__featured25-item position-relative p-3 p-md-4 mb-3 mb-lg-4">
+      <div className="ezy__featured25-icon mb-4 me-4">
+        <img
+            src={spell.icon}
+            alt={spell.name}
+            className="w-12 h-12 rounded-md"
+            style={{ width: 48, height: 48 }}
+        />
+      </div>
+      <div>
+        <h4 className="ezy__featured25-title fs-4 mb-3">{spell.name}</h4>
+        <p className="ezy__featured25-content mb-0">{spell.shortDesc}</p>
+      </div>
     </div>
-    <div>
-      <h4 className="ezy__featured25-title fs-4 mb-3">{spell.name}</h4>
-      <p className="ezy__featured25-content mb-0">{spell.shortDesc}</p>
-    </div>
-
-    {/* FULL description on hover (bootstrap tooltip-like) */}
-    <div
-      className="position-absolute bg-dark text-white p-2 rounded"
-      style={{ left: 0, top: "100%", zIndex: 50, display: "none" }}
-    >
-      {spell.description}
-    </div>
-  </div>
 );
-//tmp
-SpellItem.propTypes = {
-  spell: PropTypes.object.isRequired,
-};
+SpellItem.propTypes = { spell: PropTypes.object.isRequired };
 
-/* ════════════════════════ Main Component ═══════════════════════ */
+/* ══════════ Composant principal ══════════ */
 const DernierAjout = () => {
-  const [champ, setChamp] = useState(null);
-  const [version, setVersion] = useState("");
+  const [champ, setChamp]   = useState(null);
+  const [version, setVer]   = useState("");
+  const timerRef            = useRef(null);
 
-  useEffect(() => {
-    async function fetchLatest() {
-      try {
-        const versions = await fetch(
+  // ─── Récupération du champion le plus récent ───
+  const fetchLatestChampion = async () => {
+    try {
+      const [latestPatch] = await fetch(
           "https://ddragon.leagueoflegends.com/api/versions.json"
-        ).then((r) => r.json());
-        const latest = versions[0];
-        setVersion(latest);
+      ).then(r => r.json());
+      setVer(latestPatch);
 
-        const list = await fetch(
-          `https://ddragon.leagueoflegends.com/cdn/${latest}/data/fr_FR/champion.json`
-        ).then((r) => r.json());
-        const recentName = Object.values(list.data).sort(
-          (a, b) => +b.key - +a.key
-        )[0].id;
+      console.log("DernierAjout: latest patch ➜", latestPatch);
 
-        const details = await fetch(
-          `https://ddragon.leagueoflegends.com/cdn/${latest}/data/fr_FR/champion/${recentName}.json`
-        ).then((r) => r.json());
+      const list = await fetch(
+          `https://ddragon.leagueoflegends.com/cdn/${latestPatch}/data/fr_FR/champion.json`
+      ).then(r => r.json());
 
-        setChamp(details.data[recentName]);
-      } catch (e) {
-        console.error("Erreur :", e);
-      }
+      const champs = Object.values(list.data);
+      if (!champs.length) return;
+
+      // le champion avec l’id numérique le plus haut est (quasi-)toujours le dernier sorti
+      const newest = champs.reduce((acc, cur) =>
+          +cur.key > +acc.key ? cur : acc
+      );
+      const details = await fetch(
+          `https://ddragon.leagueoflegends.com/cdn/${latestPatch}/data/fr_FR/champion/${newest.id}.json`
+      ).then(r => r.json());
+
+      setChamp(details.data[newest.id]);
+    } catch (err) {
+      console.error("DernierAjout: fetch error ➜", err);
     }
-    fetchLatest();
+  };
+
+  // ─── Premier chargement + polling ───
+  useEffect(() => {
+    fetchLatestChampion();                        // 1) initial
+    timerRef.current = setInterval(              // 2) rafraîchissement
+        fetchLatestChampion,
+        POLL_INTERVAL
+    );
+    return () => clearInterval(timerRef.current);
   }, []);
 
-  if (!champ) return null; // or a loader
+  if (!champ) return null; // ⏳ loader customisable
 
-  /* build data for view */
+  /* Build view data */
   const splash = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champ.id}_0.jpg`;
   const spells = [
     {
@@ -88,49 +93,37 @@ const DernierAjout = () => {
   ];
 
   return (
-    <section className="ezy__featured25 dark-gray">
-      <Container>
-        {/* Heading / sub-heading */}
-        <Row className="mb-5 text-center justify-content-center">
-          <Col lg={7}>
-            <h2 className="ezy__featured25-heading mb-4">
-              Dernier ajout (Champion)
-            </h2>
-            <p className="ezy__featured25-sub-heading mb-4">
-              {champ.title}
-            </p>
-          </Col>
-        </Row>
+      <section className="ezy__featured25 dark-gray">
+        <Container>
+          <Row className="mb-5 text-center justify-content-center">
+            <Col lg={7}>
+              <h2 className="ezy__featured25-heading mb-4">
+                Dernier ajout&nbsp;: {champ.name}
+              </h2>
+              <p className="ezy__featured25-sub-heading mb-4">{champ.title}</p>
+            </Col>
+          </Row>
 
-        {/* Content */}
-        <Row className="position-relative">
-          {/* right column : splash image inside a card, a bit like the template */}
-          <Col lg={4} className="mb-4 mb-lg-0 order-lg-2">
-            <div className="h-100">
-              <div
-                className="ezy__featured25-bg-holder"
-                style={{ backgroundImage: `url(${splash})` }}
-              />
-              <Card className="ezy__featured25-card">
-                <Card.Body className="p-0">
-                  <div className="ezy__featured25-card-content px-3 py-4 px-lg-4 py-lg-5">
-                    <h4 className="mb-4">Qui est-il ?</h4>
-                    <p className="mb-0">{champ.lore}</p>
-                  </div>
-                </Card.Body>
-              </Card>
-            </div>
-          </Col>
+          <Row className="position-relative">
+            {/* Splash à droite */}
+            <Col lg={4} className="mb-4 mb-lg-0 order-lg-2">
+              <div className="h-100">
+                <div
+                    className="ezy__featured25-bg-holder"
+                    style={{ backgroundImage: `url(${splash})` }}
+                />
+              </div>
+            </Col>
 
-          {/* left column : spell list */}
-          <Col lg={6}>
-            {spells.map((sp, i) => (
-              <SpellItem spell={sp} key={i} />
-            ))}
-          </Col>
-        </Row>
-      </Container>
-    </section>
+            {/* Compétences à gauche */}
+            <Col lg={6}>
+              {spells.map((sp, i) => (
+                  <SpellItem spell={sp} key={i} />
+              ))}
+            </Col>
+          </Row>
+        </Container>
+      </section>
   );
 };
 

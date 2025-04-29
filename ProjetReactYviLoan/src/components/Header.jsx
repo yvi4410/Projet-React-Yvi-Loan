@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 import "../css/Header.css";
 import logo from "../assets/logo@.png";
 
-
 /* ─────────── Navigation routes ─────────── */
 const routes = [
   { name: "Champions", href: "#champion-list" },
@@ -30,7 +29,7 @@ const NavMenu = ({ routes }) => (
             <Button
                 variant="outline-light"
                 className="ms-3"
-                onClick={() => window.location.href = route.href}
+                onClick={() => (window.location.href = route.href)}
             >
               {route.name}
             </Button>
@@ -40,21 +39,47 @@ const NavMenu = ({ routes }) => (
 );
 NavMenu.propTypes = { routes: PropTypes.array.isRequired };
 
-const NavMenu2 = ({ toggleSearch }) => (
-    <Nav className="flex-row mb-2 mb-lg-0">
-      <Nav.Item className="me-2">
-        <Button variant="light" className="px-3">
+const NavMenu2 = ({ mapLang, setMapLang, toggleSearch }) => (
+    <Nav className="flex-row mb-2 mb-lg-0 align-items-center">
+      {/* Language selection with same form-control styling */}
+      <Nav.Item>
+        <Form.Control
+            as="select"
+            value={mapLang}
+            onChange={(e) => setMapLang(e.target.value)}
+            className="ms-3"
+            style={{ width: 'auto' }}
+        >
+          <option value="fr_FR">Français</option>
+          <option value="en_US">English</option>
+          <option value="de_DE">Deutsch</option>
+          <option value="es_ES">Español</option>
+          <option value="ja_JP">日本語</option>
+          <option value="zh_CN">中文</option>
+        </Form.Control>
+      </Nav.Item>
+      <Nav.Item className="ms-2">
+        {/* Redirection vers la carte League of Legends selon la langue */}
+        <Button
+            variant="light"
+            className="px-3"
+            onClick={() => (window.location.href = `https://map.leagueoflegends.com/${mapLang}`)}
+        >
           <FontAwesomeIcon icon={faBookOpen} />
         </Button>
       </Nav.Item>
       <Nav.Item>
-        <Button variant="light" className="px-3" onClick={toggleSearch}>
+        <Button variant="light" className="px-3 ms-2" onClick={toggleSearch}>
           <FontAwesomeIcon icon={faSearch} />
         </Button>
       </Nav.Item>
     </Nav>
 );
-NavMenu2.propTypes = { toggleSearch: PropTypes.func.isRequired };
+NavMenu2.propTypes = {
+  mapLang: PropTypes.string.isRequired,
+  setMapLang: PropTypes.func.isRequired,
+  toggleSearch: PropTypes.func.isRequired,
+};
 
 /* ─────────── Search form with suggestions ─────────── */
 const SearchForm = () => {
@@ -141,8 +166,9 @@ const SearchForm = () => {
 /* ─────────── Header component ─────────── */
 const Header = () => {
   const [isOpenSearch, setIsOpenSearch] = useState(false);
+  const [mapLang, setMapLang] = useState('fr_FR');
   const toggleSearch = () => setIsOpenSearch(!isOpenSearch);
-  const navigate = useNavigate(); // 👈 Ajout ici
+  const navigate = useNavigate();
 
   const goHome = () => {
     navigate("/");
@@ -155,11 +181,7 @@ const Header = () => {
             <Navbar.Brand href="#">
               <img src={logo} alt="Logo" style={{ height: "80px" }} />
             </Navbar.Brand>
-            <Button
-                variant="outline-light"
-                className="ms-3"
-                onClick={goHome}
-            >
+            <Button variant="outline-light" className="ms-3" onClick={goHome}>
               Accueil
             </Button>
 
@@ -167,13 +189,10 @@ const Header = () => {
               <span><span /></span>
             </Navbar.Toggle>
 
-            <Navbar.Collapse
-                id="ezy__nav5-navbar-nav"
-                className="justify-content-end"
-            >
+            <Navbar.Collapse id="ezy__nav5-navbar-nav" className="justify-content-end">
               <div className="d-flex align-items-lg-center ms-auto">
                 <NavMenu routes={routes} />
-                <NavMenu2 toggleSearch={toggleSearch} />
+                <NavMenu2 mapLang={mapLang} setMapLang={setMapLang} toggleSearch={toggleSearch} />
               </div>
             </Navbar.Collapse>
           </Container>
