@@ -1,4 +1,3 @@
-// src/components/ChampionAbilities.jsx
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Col, Container, Row } from "react-bootstrap";
@@ -24,13 +23,13 @@ const AbilityItem = ({ ability }) => (
             <img
                 src={ability.icon}
                 alt={ability.name}
-                className="w-12 h-12 rounded-md"
-                style={{ width: 48, height: 48 }}
+                className="rounded-md"
+                style={{ width: 64, height: 64 }}
             />
         </div>
         <div>
-            <h4 className="ezy__featured25-title fs-4 mb-3">{ability.name}</h4>
-            <p className="ezy__featured25-content mb-0">{ability.description}</p>
+            <h4 className="ezy__featured25-title fs-3 mb-3">{ability.name}</h4>
+            <p className="ezy__featured25-content mb-0 fs-5">{ability.description}</p>
         </div>
     </div>
 );
@@ -50,7 +49,9 @@ const ChampionAbilities = ({ champion }) => {
 
     useEffect(() => {
         const fetchVersion = async () => {
-            const [latest] = await fetch("https://ddragon.leagueoflegends.com/api/versions.json").then(res => res.json());
+            const [latest] = await fetch(
+                "https://ddragon.leagueoflegends.com/api/versions.json"
+            ).then((res) => res.json());
             setVersion(latest);
         };
 
@@ -62,7 +63,7 @@ const ChampionAbilities = ({ champion }) => {
 
         const formattedAbilities = [
             formatPassive(champion.passive, version),
-            ...champion.spells.map(spell => formatAbility(spell, version)),
+            ...champion.spells.map((spell) => formatAbility(spell, version)),
         ];
 
         setAbilities(formattedAbilities);
@@ -73,7 +74,9 @@ const ChampionAbilities = ({ champion }) => {
             <Container>
                 <Row className="mb-5 text-center justify-content-center">
                     <Col lg={7}>
-                        <h2 className="ezy__featured25-heading mb-4">Compétences du champion</h2>
+                        <h2 className="ezy__featured25-heading mb-4">
+                            Compétences du champion
+                        </h2>
                     </Col>
                 </Row>
                 <Row className="position-relative">

@@ -38,36 +38,38 @@ const ChampionPage = () => {
         description: champion.passive.description,
         icon: `https://ddragon.leagueoflegends.com/cdn/14.8.1/img/passive/${champion.passive.image.full}`
     };
-
+    const version = "14.8.1";
     return (
-        <section className="ezy__portfolio5 dark-gray champion-page w-full">
-            <div className="champion-page d-flex flex-column min-vh-100 w-full m-0 p-0 text-white">
-                <Header />
-                <ChampionFeature
-                    name={champion.name}
-                    lore={champion.lore}
-                    splashImage={splashUrl}
-                />
-                <div className="container-fluid my-5 px-5 w-full">
-                    <div className="row mb-4">
-                        <div className="col-12">
-                            <ChampionAbilities champion={champion} />
+        <div className="text-black">
+        <Header />
+            <section className="ezy__portfolio5 dark-gray champion-page w-full">
+                <div className="champion-page d-flex flex-column min-vh-100 w-full m-0 p-0 text-white">
+                    <ChampionFeature
+                        name={champion.name}
+                        lore={champion.lore}
+                        splashImage={splashUrl}
+                    />
+                    <div className="container-fluid my-5 px-5 w-full">
+                        <div className="row mb-4">
+                            <div className="col-12">
+                                <ChampionAbilities champion={champion} />
+                            </div>
+                        <div className="row mb-4">
+                            <div className="col-12">
+                                <ChampionStats stats={champion.stats} />
+                            </div>
                         </div>
-                    <div className="row mb-4">
-                        <div className="col-12">
-                            <ChampionStats stats={champion.stats} />
+                        </div>
+                        <div className="row mt-5">
+                            <div className="col-12">
+                                <ChampionAbilityDetail ability={champion.spells[3]} />
+                            </div>
                         </div>
                     </div>
-                    </div>
-                    <div className="row mt-5">
-                        <div className="col-12">
-                            <ChampionAbilityDetail ability={champion.spells[3]} />
-                        </div>
-                    </div>
+                    <Footer />
                 </div>
-                <Footer />
-            </div>
-        </section>
+            </section>
+        </div>
     );
 };
 
