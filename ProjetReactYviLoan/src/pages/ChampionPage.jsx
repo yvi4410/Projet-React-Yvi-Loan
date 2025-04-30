@@ -8,7 +8,7 @@ import ChampionFeature from "../components/ChampionFeature";
 import Footer from "../components/Footer.jsx";
 import Header from "../components/Header.jsx";
 
-const OPENAI_KEY = "sk-oY3KG2IU-fFxqEyn7Vx4nuYSsHhsI2fPlt7AnLt6vTT3BlbkFJAwx4299_Q70Mz9X4v1dq4LdLuUAS9Ge2Wvzx8GBRAA";
+const OPENAI_KEY = process.env.caca;
 
 const ChampionPage = () => {
     const { name } = useParams();
