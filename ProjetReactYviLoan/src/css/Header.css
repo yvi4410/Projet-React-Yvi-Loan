@@ -1,0 +1,194 @@
+/* General Variables */
+.ezy__nav5 {
+    --bs-body-color: #212529;
+    --bs-body-bg: rgb(255, 255, 255);
+    --ezy-theme-color: rgb(13, 110, 253);
+    --ezy-theme-color-rgb: 13, 110, 253;
+    background-color: var(--bs-body-bg);
+    height: 80px; /* Set a fixed height for the header */
+    display: flex;
+    align-items: center; /* Center content vertically */
+}
+
+/* Theme Variants */
+.gray .ezy__nav5,
+.ezy__nav5.gray {
+    --bs-body-bg: rgb(246, 246, 246);
+}
+
+.dark-gray .ezy__nav5,
+.ezy__nav5.dark-gray {
+    --bs-body-color: #ffffff;
+    --bs-body-bg: rgb(30, 39, 53);
+}
+
+.dark .ezy__nav5,
+.ezy__nav5.dark {
+    --bs-body-color: #ffffff;
+    --bs-body-bg: rgb(11, 23, 39);
+}
+
+/* Navbar Brand */
+.ezy__nav5 .navbar-brand {
+    font-weight: 800;
+    font-size: 30px;
+    color: var(--bs-body-color);
+}
+
+.header-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+/* Navbar Toggler */
+.ezy__nav5 .navbar-toggler {
+    border: none;
+    box-shadow: none !important;
+}
+
+.ezy__nav5 .navbar-toggler > span {
+    display: flex;
+    align-items: center;
+    height: 32px;
+}
+
+.ezy__nav5 .navbar-toggler > span > span {
+    position: relative;
+}
+
+.ezy__nav5 .navbar-toggler > span > span,
+.ezy__nav5 .navbar-toggler > span > span::before,
+.ezy__nav5 .navbar-toggler > span > span::after {
+    height: 2px;
+    background-color: var(--bs-body-color);
+    width: 25px;
+    display: inline-block;
+    border-radius: 5px;
+    transition: all 0.35s ease-in-out;
+}
+
+.ezy__nav5 .navbar-toggler > span > span::before,
+.ezy__nav5 .navbar-toggler > span > span::after {
+    content: "";
+    position: absolute;
+    left: 0;
+}
+
+.ezy__nav5 .navbar-toggler[aria-expanded="false"] > span > span::before {
+    top: 7px;
+}
+
+.ezy__nav5 .navbar-toggler[aria-expanded="false"] > span > span::after {
+    bottom: 7px;
+}
+
+.ezy__nav5 .navbar-toggler[aria-expanded="true"] > span > span {
+    background-color: transparent;
+}
+
+.ezy__nav5 .navbar-toggler[aria-expanded="true"] > span > span::before {
+    top: 0;
+    transform: rotate(-45deg);
+}
+
+.ezy__nav5 .navbar-toggler[aria-expanded="true"] > span > span::after {
+    bottom: 0;
+    transform: rotate(45deg);
+}
+
+/* Navbar Links */
+.ezy__nav5 .navbar-nav .nav-link {
+    color: var(--bs-body-color);
+    opacity: 0.6;
+}
+
+.ezy__nav5 .navbar-nav .nav-link:hover,
+.ezy__nav5 .navbar-nav .nav-link:focus,
+.ezy__nav5 .navbar-nav .nav-link.active {
+    color: var(--bs-body-color);
+    opacity: 1;
+}
+
+@media (min-width: 992px) {
+    .ezy__nav5 .navbar-nav .nav-link {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+}
+
+/* Buttons */
+.ezy__nav5 .btn {
+    border-radius: 10px;
+}
+
+.ezy__nav5-btn {
+    background-color: var(--ezy-theme-color);
+    color: #fff;
+}
+
+.ezy__nav5-btn:hover {
+    background-color: rgba(var(--ezy-theme-color-rgb), 0.9);
+    color: #fff;
+}
+
+.ezy__nav5 .btn-light {
+    background-color: var(--ezy-theme-color);
+    border-color: var(--ezy-theme-color);
+    color: #fff;
+}
+
+.ezy__nav5 .btn-light:hover {
+    background-color: rgba(var(--ezy-theme-color-rgb), 0.9);
+    border-color: rgba(var(--ezy-theme-color-rgb), 0.9);
+    color: #fff;
+}
+
+/* Form Controls */
+.ezy__nav5 .form-control {
+    min-height: 48px;
+    line-height: 40px;
+    border-color: transparent;
+    background: rgba(163, 190, 241, 0.14);
+    border-radius: 10px;
+    color: var(--bs-body-color);
+}
+
+.ezy__nav5 .form-control:focus {
+    border-color: #86b7fe;
+    box-shadow: none;
+}
+
+.suggestions-list {
+    position: absolute;
+    z-index: 10;
+    background: white;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin-top: 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+}
+
+.suggestion-item {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f0f0;
+}
+
+.search-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.search-form-container {
+    width: 100%;
+    max-width: 600px;
+}

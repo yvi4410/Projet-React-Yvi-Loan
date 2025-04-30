@@ -1,21 +1,8 @@
-import './App.css';
-import Footer from './footer/footer.jsx';
-import {Outlet} from "react-router-dom"; // Importation du footer
+
+import React from "react";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  return (
-    <>
-      <header>
-        <nav>
-          <Link to="/">Accueil</Link>
-        </nav>
-      </header>
-      <main>
-        <Outlet />
-      </main>
-      <Footer /> {/* Ajout du footer */}
-    </>
-  );
+    return <Outlet />; // uniquement l'affichage dynamique ici
 }
-
 export default App;

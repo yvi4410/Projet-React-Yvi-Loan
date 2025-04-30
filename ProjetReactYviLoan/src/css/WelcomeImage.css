@@ -1,0 +1,31 @@
+.welcome-image {
+    position: relative;
+    width: 100vw;
+    height: 400px; /* control size */
+    background-image: url('../assets/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 80px; /* adjusted to remove white gap by moving section up further */
+}
+
+
+.welcome-text {
+    position: absolute;
+    color: white;
+    font-size: 4rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    gap: 0rem;
+}
+
+.welcome-logo {
+    height: 250px;
+}

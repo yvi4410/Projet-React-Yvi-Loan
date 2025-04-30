@@ -1,0 +1,22 @@
+/* Complément pour la page 404 intégrée à ChampionList */
+
+.error-404 {
+    width: 100vw;           /* pleine largeur de la fenêtre */
+    min-height: 100vh;      /* pleine hauteur pour centrer verticalement si besoin */
+    margin: 0 !important;   /* éviter les marges latérales */
+    padding: 0 !important;
+}
+
+.error-404-banner {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 200px;
+    width: 100%;
+    opacity: 0.8;
+}
+
+.error-404-text {
+    color: var(--bs-body-color);
+    font-size: 18px;
+}
